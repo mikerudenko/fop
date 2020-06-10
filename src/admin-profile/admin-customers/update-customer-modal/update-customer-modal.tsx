@@ -26,7 +26,7 @@ export const UpdateCustomerModal = memo(
           formConfig={{ defaultValues: initialValues }}
         >
           <FormField name='id' type='text' disabled label='ID' />
-          <FormField name='code' type='text' required label='Код' />
+          <FormField name='code' type='text' required label='Код ЄДРОПУ' />
           <FormField name='name' type='text' required label='Найменування' />
           <FormField name='rr' type='text' required label='РР' />
           <AppSubmitButton color='primary' text='Зберегти' />
