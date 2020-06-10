@@ -6,6 +6,7 @@ import { NotificationsSlice } from './notifications';
 import { AuthSlice } from './auth';
 import { ModalSlice } from './modal';
 import { ProductsSlice } from './products';
+import { CustomersSlice } from './customers';
 
 export const createRootReducer = (history: History) =>
   combineReducers({
@@ -14,4 +15,5 @@ export const createRootReducer = (history: History) =>
     [AuthSlice.name]: AuthSlice.reducer,
     [ModalSlice.name]: ModalSlice.reducer,
     [ProductsSlice.name]: ProductsSlice.reducer,
+    [CustomersSlice.name]: CustomersSlice.reducer,
   });

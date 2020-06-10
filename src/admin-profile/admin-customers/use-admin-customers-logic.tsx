@@ -1,36 +1,36 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { useProductsConnect } from '../../store/products';
+import { useCustomersConnect } from '../../store/customers';
 import { useModalConnect } from '../../store/modal';
-import { UPDATE_PRODUCT_MODAL } from './admin-products.constants';
+import { UPDATE_CUSTOMER_MODAL } from './admin-customers.constants';
 import { APP_CONFIRM } from '../../components/app-confirm';
-import { AdminProductsTableActions } from './admin-products-table-actions';
+import { AdminCustomersTableActions } from './admin-customers-table-actions';
 import { META_THUNK } from '../../app.constants';
 
-export const useAdminProductsLogic = () => {
+export const useAdminCustomersLogic = () => {
   const {
-    GetProductListRequest,
-    DeleteProductRequest,
-    productList,
+    GetCustomerListRequest,
+    DeleteCustomerRequest,
+    customerList,
     networkStatus,
-  } = useProductsConnect();
+  } = useCustomersConnect();
   const { ShowModal, HideModal } = useModalConnect();
 
   const [idToUpdate, setIdToUpdate] = useState<null | string>(null);
   const [idToDelete, setIdToDelete] = useState<null | string>(null);
 
-  const products = useMemo(
+  const customers = useMemo(
     () =>
-      productList
-        ? Object.keys(productList).map((key) => productList[key])
+    customerList
+        ? Object.keys(customerList).map((key) => customerList[key])
         : [],
-    [productList],
+    [customerList],
   );
 
   const onAddClick = useCallback(() => {
     setIdToUpdate(null);
-    ShowModal(UPDATE_PRODUCT_MODAL);
-    GetProductListRequest();
-  }, [ShowModal, GetProductListRequest]);
+    ShowModal(UPDATE_CUSTOMER_MODAL);
+    GetCustomerListRequest();
+  }, [ShowModal, GetCustomerListRequest]);
 
   const ResetDelete = useCallback(() => {
     setIdToDelete(null);
@@ -38,15 +38,15 @@ export const useAdminProductsLogic = () => {
   }, [HideModal]);
 
   const onConfirmDelete = useCallback(async () => {
-    await DeleteProductRequest(idToDelete, META_THUNK);
+    await DeleteCustomerRequest(idToDelete, META_THUNK);
     ResetDelete();
-    GetProductListRequest();
-  }, [DeleteProductRequest, idToDelete, GetProductListRequest, ResetDelete]);
+    GetCustomerListRequest();
+  }, [DeleteCustomerRequest, idToDelete, GetCustomerListRequest, ResetDelete]);
 
   const onEditClick = useCallback(
     (id: string) => {
       setIdToUpdate(id);
-      ShowModal(UPDATE_PRODUCT_MODAL);
+      ShowModal(UPDATE_CUSTOMER_MODAL);
     },
     [ShowModal],
   );
@@ -63,7 +63,7 @@ export const useAdminProductsLogic = () => {
     () => [
       {
         dataField: 'code',
-        label: 'Код',
+        label: 'Код ЄДРОПУ',
         formatter: (value: string) => value,
       },
       {
@@ -72,15 +72,15 @@ export const useAdminProductsLogic = () => {
         formatter: (value: string) => value,
       },
       {
-        dataField: 'price',
-        label: 'Ціна',
+        dataField: 'rr',
+        label: 'РР',
         formatter: (value: string) => value,
       },
       {
         dataField: 'id',
         label: '',
         formatter: (value: string) => (
-          <AdminProductsTableActions
+          <AdminCustomersTableActions
             id={value}
             {...{ onEditClick, onDeleteClick }}
           />
@@ -91,13 +91,13 @@ export const useAdminProductsLogic = () => {
   );
 
   useEffect(() => {
-    if (!productList) {
-      GetProductListRequest();
+    if (!customerList) {
+      GetCustomerListRequest();
     }
-  }, [GetProductListRequest, productList]);
+  }, [GetCustomerListRequest, customerList]);
 
   return {
-    products,
+    customers,
     onAddClick,
     idToUpdate,
     networkStatus,
