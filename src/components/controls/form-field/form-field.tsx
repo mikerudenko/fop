@@ -8,6 +8,7 @@ export type FormFieldProps = {
   required?: boolean;
   multiline?: boolean;
   rows?: number;
+  disabled?: boolean;
 };
 
 export const FormField = memo(({ type, ...rest }: FormFieldProps) => {

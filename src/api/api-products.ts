@@ -15,3 +15,6 @@ export const getProductList = async () => {
 
   return products;
 };
+
+export const deleteProduct = (id: string) =>
+  firebaseFirestore.collection('products').doc(id).delete();

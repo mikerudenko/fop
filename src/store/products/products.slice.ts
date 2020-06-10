@@ -6,7 +6,10 @@ import { ProductsState } from './products.types';
 export const ProductsSlice = createSlice({
   name: 'products',
   initialState: {
-    list: {},
+    list: {
+      data: null,
+      networkStatus: NetworkStatus.None,
+    },
   } as ProductsState,
   reducers: {
     GetProductListRequest: (state) => {

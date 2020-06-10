@@ -1,9 +1,17 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { showErrorNotification } from '../notifications';
+import {
+  showErrorNotification,
+  showSuccessNotification,
+} from '../notifications';
 import { ProductsSlice } from './products.slice';
 import { MetaThunk } from '../../app.types';
-import { getProductList } from '../../api';
+import {
+  getProductList,
+  Product,
+  updateProduct,
+  deleteProduct,
+} from '../../api';
 
 const {
   GetProductListRequest,
@@ -27,9 +35,33 @@ export function* getProductListSaga() {
   }
 }
 
-export function* updateProductSaga() {}
+export function* updateProductSaga(
+  action: PayloadAction<Product, string, MetaThunk>,
+) {
+  try {
+    yield call(updateProduct, action.payload);
+    yield put(UpdateProductSuccess(null, action.meta));
+    yield put(showSuccessNotification('Товар успішно відредагований'));
+  } catch {
+    yield put(
+      showErrorNotification('Помилка при редагуванні, спробуйте ще раз'),
+    );
+    yield put(UpdateProductError(null, action.meta, true));
+  }
+}
 
-export function* deleteProductSaga() {}
+export function* deleteProductSaga(
+  action: PayloadAction<string, string, MetaThunk>,
+) {
+  try {
+    yield call(deleteProduct, action.payload);
+    yield put(DeleteProductSuccess(null, action.meta));
+    yield put(showSuccessNotification('Товар успішно видалено'));
+  } catch {
+    yield put(showErrorNotification('Помилка при видаленні, спробуйте ще раз'));
+    yield put(DeleteProductError(null, action.meta, true));
+  }
+}
 
 export const ProductSagas = [
   takeLatest(GetProductListRequest.type, getProductListSaga),

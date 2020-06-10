@@ -5,7 +5,7 @@ import { ModalSlice } from './modal.slice';
 import { constructSelectModalStatus } from './modal.selectors';
 import { useActions } from '../../hooks';
 
-export const useModalConnect = (id: string) => {
+export const useModalConnect = (id?: string) => {
   const modalStatus = useSelector(constructSelectModalStatus(id));
 
   const actions = useActions(ModalSlice.actions);

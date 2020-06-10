@@ -16,3 +16,6 @@ export const selectProductListNetworkStatus = createSelector(
   selectProductsFeature,
   ({ list: { networkStatus } }) => networkStatus,
 );
+
+export const constructProductByIdSelector = (id?: string | null) =>
+  createSelector(selectProductList, (data) => (id && data ? data[id] : null));

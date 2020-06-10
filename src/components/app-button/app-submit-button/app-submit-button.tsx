@@ -7,6 +7,7 @@ import { useAppSubmitButtonStyles } from './use-app-submit-button-styles';
 
 interface AppSubmitButtonProps {
   text: string;
+  loading?: boolean;
   size?: 'small' | 'medium' | 'large';
 }
 
@@ -17,6 +18,7 @@ export const AppSubmitButton = memo(
     color,
     onClick,
     size = 'medium' as 'medium',
+    loading,
   }: AppSubmitButtonProps & ButtonProps) => {
     const classes = useAppSubmitButtonStyles();
     const {
@@ -39,7 +41,7 @@ export const AppSubmitButton = memo(
         >
           {text}
         </Button>
-        {isSubmitting && (
+        {(isSubmitting || loading) && (
           <CircularProgress size={24} className={classes.buttonProgress} />
         )}
       </div>

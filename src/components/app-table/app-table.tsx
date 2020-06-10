@@ -2,7 +2,7 @@ import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import React, { memo } from 'react';
 
-import { AppTableColumn, SortConfig } from './app-table.types';
+import { AppTableColumn } from './app-table.types';
 import { AppTablePagination } from './app-table-pagination';
 import { AppTableTbody } from './app-table-tbody';
 import { AppTableThead } from './app-table-thead';
@@ -13,11 +13,10 @@ interface AppTableProps {
   keyField: string;
   data: any[];
   loading: boolean;
-  onTableChange?(): void;
 }
 
 export const AppTable = memo(
-  ({ columns, keyField, data, loading, onTableChange }: AppTableProps) => {
+  ({ columns, keyField, data, loading }: AppTableProps) => {
     const classes = useAppTableStyles();
 
     return (

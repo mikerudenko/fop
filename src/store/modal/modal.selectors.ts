@@ -6,6 +6,6 @@ export const selectModalFeature = createFeatureSelector<ModalState>(
   ModalSlice.name,
 );
 
-export const constructSelectModalStatus = (id: string) => ({
+export const constructSelectModalStatus = (id?: string) => ({
   modal: { list },
-}: any) => list[id] || false;
+}: any) => (id ? list[id] || false : false);

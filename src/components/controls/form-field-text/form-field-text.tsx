@@ -13,11 +13,12 @@ export type AppFieldTextProps = {
   required?: boolean;
   type?: 'text' | 'password' | 'email';
   multiline?: boolean;
+  disabled?: boolean;
   rows?: number;
 };
 
 export const FormFieldText = memo(
-  ({ name, type, label, multiline, rows }: AppFieldTextProps) => {
+  ({ name, type, label, multiline, rows, disabled }: AppFieldTextProps) => {
     const {
       register,
       errors,
@@ -36,6 +37,7 @@ export const FormFieldText = memo(
             type,
             multiline,
             rows,
+            disabled,
           }}
           variant='outlined'
           error={showError}
