@@ -1,21 +1,21 @@
-import React, { useCallback } from 'react';
-import { useAdminProductsTableActionsStyles } from './use-admin-products-table-actions-styles';
-import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
-import { AppRemoveButton } from '../../../components/app-button';
+import EditIcon from '@material-ui/icons/Edit';
+import React, { useCallback } from 'react';
+import { AppRemoveButton } from '../../components/app-button';
+import { useAdminTableActionsStyles } from './use-admin-table-actions-styles';
 
-type AdminProductsTableActionsProps = {
+type AdminTableActionsProps = {
   onEditClick(id: string): void;
   onDeleteClick(id: string): void;
   id: string;
 };
 
-export const AdminProductsTableActions = ({
+export const AdminTableActions = ({
   onEditClick,
   onDeleteClick,
   id,
-}: AdminProductsTableActionsProps) => {
-  const classes = useAdminProductsTableActionsStyles();
+}: AdminTableActionsProps) => {
+  const classes = useAdminTableActionsStyles();
 
   const onDeleteHandle = useCallback(() => onDeleteClick(id), [
     id,

@@ -3,8 +3,8 @@ import { useCustomersConnect } from '../../store/customers';
 import { useModalConnect } from '../../store/modal';
 import { UPDATE_CUSTOMER_MODAL } from './admin-customers.constants';
 import { APP_CONFIRM } from '../../components/app-confirm';
-import { AdminCustomersTableActions } from './admin-customers-table-actions';
 import { META_THUNK } from '../../app.constants';
+import { AdminTableActions } from '../admin-table-actions';
 
 export const useAdminCustomersLogic = () => {
   const {
@@ -80,7 +80,7 @@ export const useAdminCustomersLogic = () => {
         dataField: 'id',
         label: '',
         formatter: (value: string) => (
-          <AdminCustomersTableActions
+          <AdminTableActions
             id={value}
             {...{ onEditClick, onDeleteClick }}
           />

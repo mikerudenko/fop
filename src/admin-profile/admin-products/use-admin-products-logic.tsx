@@ -3,8 +3,8 @@ import { useProductsConnect } from '../../store/products';
 import { useModalConnect } from '../../store/modal';
 import { UPDATE_PRODUCT_MODAL } from './admin-products.constants';
 import { APP_CONFIRM } from '../../components/app-confirm';
-import { AdminProductsTableActions } from './admin-products-table-actions';
 import { META_THUNK } from '../../app.constants';
+import { AdminTableActions } from '../admin-table-actions';
 
 export const useAdminProductsLogic = () => {
   const {
@@ -80,10 +80,7 @@ export const useAdminProductsLogic = () => {
         dataField: 'id',
         label: '',
         formatter: (value: string) => (
-          <AdminProductsTableActions
-            id={value}
-            {...{ onEditClick, onDeleteClick }}
-          />
+          <AdminTableActions id={value} {...{ onEditClick, onDeleteClick }} />
         ),
       },
     ],
