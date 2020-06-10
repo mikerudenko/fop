@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /products/{allPaths=**} {
+      allow create, update, delete, get, list :request.auth != null
+    }
+
+    match /consumers/{allPaths=**} {
+      allow create, update, delete, get, list :request.auth != null
+    }
+
+     match /invoices/{allPaths=**} {
+      allow create, update, delete, get, list :request.auth != null
+    }
+  }
+}

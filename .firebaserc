@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "dev": "fop-app",
+    "default": "fop-app"
+  }
+}
