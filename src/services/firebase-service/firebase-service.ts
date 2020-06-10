@@ -3,8 +3,6 @@ import 'firebase/storage';
 import 'firebase/firestore';
 import 'firebase/functions';
 import 'firebase/auth';
-import 'firebase/analytics';
-import 'firebase/performance';
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -23,8 +21,6 @@ export const firebaseFunctions = firebase.functions(firebaseApp);
 export const firebaseStorage = firebase.storage(firebaseApp);
 export const firebaseFirestore = firebase.firestore(firebaseApp);
 export const firebaseAuth = firebase.auth(firebaseApp);
-export const firebaseAnalytics = firebase.analytics(firebaseApp);
-export const firebasePerformance = firebase.performance();
 
 export const getCallableFunction = (name: string) =>
   firebaseFunctions.httpsCallable(name);

@@ -1,6 +1,5 @@
 {
   "projects": {
-    "dev": "fop-app",
-    "default": "fop-app"
+    "default": "fop-app-431e8"
   }
 }
