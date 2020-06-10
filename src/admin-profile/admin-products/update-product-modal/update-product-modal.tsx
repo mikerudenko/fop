@@ -28,7 +28,7 @@ export const UpdateProductModal = memo(
           <FormField name='id' type='text' disabled label='ID' />
           <FormField name='code' type='text' required label='Код' />
           <FormField name='name' type='text' required label='Найменування' />
-          <FormField name='price' type='text' required label='Ціна' />
+          <FormField name='price' type='number' required label='Ціна' />
           <AppSubmitButton color='primary' text='Зберегти' />
         </AppForm>
       ),

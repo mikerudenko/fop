@@ -3,10 +3,10 @@ import Table from '@material-ui/core/Table';
 import React, { memo } from 'react';
 
 import { AppTableColumn } from './app-table.types';
-import { AppTablePagination } from './app-table-pagination';
+// import { AppTablePagination } from './app-table-pagination';
 import { AppTableTbody } from './app-table-tbody';
 import { AppTableThead } from './app-table-thead';
-import { useAppTableStyles } from './useAppTableStyles';
+import { useAppTableStyles } from './use-app-table-styles';
 
 interface AppTableProps {
   columns: AppTableColumn[];
@@ -34,7 +34,7 @@ export const AppTable = memo(
             />
           </Table>
         </div>
-        <AppTablePagination />
+        {/* <AppTablePagination /> */}
       </Paper>
     );
   },

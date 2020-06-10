@@ -12,6 +12,7 @@ export type FormFieldProps = {
 };
 
 export const FormField = memo(({ type, ...rest }: FormFieldProps) => {
+  // @ts-ignore
   const Field = FormFields[type];
   return <Field type={type} {...rest} />;
 });

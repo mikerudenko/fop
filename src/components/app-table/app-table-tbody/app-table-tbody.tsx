@@ -9,7 +9,7 @@ import isEmpty from 'lodash/isEmpty';
 import { AppLoader } from '../../app-loader';
 import { AppTableColumn } from '../app-table.types';
 import { AppTableRow } from '../app-table-row';
-import { useAppTableStyles } from '../useAppTableStyles';
+import { useAppTableStyles } from '../use-app-table-styles';
 
 interface AppTableBodyProps {
   keyField: string;
@@ -42,11 +42,19 @@ export const AppTableTbody = memo(
 
     const noDataMessage = useMemo(() => {
       if (isEmpty(data) && isFilterActive) {
-        return <Typography variant='subtitle1'>Немає даних</Typography>;
+        return (
+          <Typography variant='subtitle1' className={classes.noData}>
+            Немає даних
+          </Typography>
+        );
       }
 
-      return <Typography variant='subtitle1'>Немає даних</Typography>;
-    }, [data, isFilterActive]);
+      return (
+        <Typography variant='subtitle1' className={classes.noData}>
+          Немає даних
+        </Typography>
+      );
+    }, [data, isFilterActive, classes.noData]);
 
     const renderPlaceholderRow = useCallback(
       (content) => (

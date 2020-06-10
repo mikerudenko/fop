@@ -8,8 +8,12 @@ export const useAppTableStyles = makeStyles({
   tableWrapper: {
     maxHeight: 407,
     overflow: 'auto',
+    position: 'relative',
   },
   bodyCell: {
     height: 50,
+  },
+  noData: {
+    textAlign: 'center',
   },
 });

@@ -1,8 +1,9 @@
 import { FormFieldText } from '../form-field-text';
 import { FormSelect } from '../form-select';
 import { FormChips } from '../form-chips';
+import { FormFieldNumber } from '../form-field-number';
 
-export type FormFieldType = 'text' | 'email' | 'password';
+export type FormFieldType = string;
 
 export const FormFields = {
   text: FormFieldText,
@@ -10,4 +11,5 @@ export const FormFields = {
   password: FormFieldText,
   select: FormSelect,
   chips: FormChips,
+  number: FormFieldNumber,
 };

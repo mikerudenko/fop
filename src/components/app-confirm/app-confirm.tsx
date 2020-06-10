@@ -2,7 +2,6 @@ import React, { memo, ReactNode, useCallback, useMemo } from 'react';
 import { AppModal } from '../app-modal';
 import { APP_CONFIRM } from './app-confirm.constants';
 import Button from '@material-ui/core/Button';
-import { AppSubmitButton } from '../app-button';
 import { useModalConnect } from '../../store/modal';
 import { useAppConfirmStyles } from './use-app-confirm-styles';
 
@@ -47,17 +46,18 @@ export const AppConfirm = memo(
             >
               Відміна
             </Button>
-            <AppSubmitButton
-              color='primary'
+            <Button
+              color='secondary'
               onClick={onConfirm}
-              loading={loading}
-              text='OK'
-              id='test-confirm-button'
-            />
+              variant='contained'
+              id='test-cancel-button'
+            >
+              OK
+            </Button>
           </div>
         </>
       ),
-      [content, loading, onCancelHandle, onConfirm, classes.buttons],
+      [content, onCancelHandle, onConfirm, classes.buttons],
     );
 
     return (
