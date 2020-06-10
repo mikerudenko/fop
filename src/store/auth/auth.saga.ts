@@ -8,7 +8,7 @@ import {
   setLocalPersistence,
   signInWithCredentials,
   signOut,
-} from '../../api/api.auth';
+} from '../../api/api-auth';
 import { ROUTES } from '../../app.constants';
 import {
   showErrorNotification,
