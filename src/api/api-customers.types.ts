@@ -3,4 +3,8 @@ export type Customer = {
   code: string;
   name: string;
   rr: string;
+  phone: string;
+  address: string;
+  ipn: string;
+  mfo: string;
 };

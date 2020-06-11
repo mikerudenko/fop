@@ -1,6 +1,6 @@
 import { createSlice, Dictionary, PayloadAction } from '@reduxjs/toolkit';
-import {  Customer } from '../../api';
-import { NetworkStatus, noopAction } from '../../store-utils';
+import { Customer } from '../../api';
+import { NetworkStatus, noopAction, prepareAction } from '../../store-utils';
 import { CustomersState } from './customers.types';
 
 export const CustomersSlice = createSlice({
@@ -26,10 +26,20 @@ export const CustomersSlice = createSlice({
       state.list.networkStatus = NetworkStatus.Error;
     },
     UpdateCustomerRequest: noopAction,
-    UpdateCustomerSuccess: noopAction,
+    UpdateCustomerSuccess: {
+      prepare: prepareAction,
+      reducer: (state, action) => {
+        state.list.data![action.payload.id] = action.payload as Customer;
+      },
+    },
     UpdateCustomerError: noopAction,
     DeleteCustomerRequest: noopAction,
-    DeleteCustomerSuccess: noopAction,
+    DeleteCustomerSuccess: {
+      prepare: prepareAction,
+      reducer: (state, action) => {
+        delete state.list.data![action.payload as string];
+      },
+    },
     DeleteCustomerError: noopAction,
   },
 });

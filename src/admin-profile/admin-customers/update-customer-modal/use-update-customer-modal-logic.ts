@@ -11,25 +11,27 @@ const getNewCustomer = () => ({
   name: '',
   code: '',
   rr: '',
+  phone: '',
+  address: '',
+  ipn: '',
+  mfo: '',
 });
 
 export const useUpdateCustomerModalLogic = (idToUpdate: null | string) => {
-  const {
-    UpdateCustomerRequest,
-    currentCustomer,
-    GetCustomerListRequest,
-  } = useCustomersConnect(idToUpdate);
+  const { UpdateCustomerRequest, currentCustomer } = useCustomersConnect(
+    idToUpdate,
+  );
   const { modalStatus, HideModal } = useModalConnect(UPDATE_CUSTOMER_MODAL);
   const title = idToUpdate ? 'Редагування споживача' : 'Створення споживача';
   const initialValues = idToUpdate ? currentCustomer : getNewCustomer();
 
   const onSubmit = useCallback(
-    async (payload: Customer, e) => {
+    async (payload: Customer) => {
+      debugger;
       await UpdateCustomerRequest(payload, META_THUNK);
       HideModal(UPDATE_CUSTOMER_MODAL);
-      GetCustomerListRequest();
     },
-    [UpdateCustomerRequest, GetCustomerListRequest, HideModal],
+    [UpdateCustomerRequest, HideModal],
   );
 
   return {

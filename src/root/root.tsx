@@ -10,7 +10,7 @@ import { SignIn } from '../sign-in';
 import { useAuthConnect } from '../store/auth';
 import { useNotificationsLogic } from '../store/notifications';
 import { useRootStyles } from './use-root-styles';
-import { AdminProfile } from '../admin-profile/admin-profile';
+import { AdminProfile } from '../admin-profile/invoice-form/admin-profile';
 
 export const Root = memo(() => {
   const location = useLocation();

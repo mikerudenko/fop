@@ -12,7 +12,10 @@ export const useSignInLogic = () => {
   const onSubmit = useCallback(
     async (payload: SignInValues, e) => {
       try {
-        await AuthRequest(payload, { ...META_THUNK, strategy: 'sign-in' });
+        await AuthRequest(payload, {
+          ...META_THUNK,
+          strategy: 'sign-in',
+        } as any);
       } catch (error) {
         setError(resolveServerError(error));
       }

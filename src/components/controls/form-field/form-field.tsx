@@ -9,6 +9,7 @@ export type FormFieldProps = {
   multiline?: boolean;
   rows?: number;
   disabled?: boolean;
+  mask?: 'phone';
 };
 
 export const FormField = memo(({ type, ...rest }: FormFieldProps) => {

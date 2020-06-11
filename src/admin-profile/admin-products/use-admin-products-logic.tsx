@@ -29,8 +29,7 @@ export const useAdminProductsLogic = () => {
   const onAddClick = useCallback(() => {
     setIdToUpdate(null);
     ShowModal(UPDATE_PRODUCT_MODAL);
-    GetProductListRequest();
-  }, [ShowModal, GetProductListRequest]);
+  }, [ShowModal]);
 
   const ResetDelete = useCallback(() => {
     setIdToDelete(null);
@@ -40,8 +39,7 @@ export const useAdminProductsLogic = () => {
   const onConfirmDelete = useCallback(async () => {
     await DeleteProductRequest(idToDelete, META_THUNK);
     ResetDelete();
-    GetProductListRequest();
-  }, [DeleteProductRequest, idToDelete, GetProductListRequest, ResetDelete]);
+  }, [DeleteProductRequest, idToDelete, ResetDelete]);
 
   const onEditClick = useCallback(
     (id: string) => {

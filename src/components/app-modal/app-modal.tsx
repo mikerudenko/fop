@@ -25,6 +25,7 @@ export const AppModal: FC<AppModalProps> = ({
   actions,
   content,
   modalStatus,
+  maxWidth,
   disableBackdropClick,
 }) => {
   const classes = useAppModalStyles();
@@ -39,6 +40,7 @@ export const AppModal: FC<AppModalProps> = ({
       {...{ disableBackdropClick }}
       open={modalStatus}
       onClose={onCloseModal}
+      maxWidth={maxWidth}
       classes={{ paper: classes.paper }}
       aria-labelledby={`modal-dialog-${id}-title`}
       aria-describedby={`modal-dialog-${id}-description`}

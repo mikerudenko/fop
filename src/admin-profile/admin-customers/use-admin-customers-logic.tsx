@@ -5,6 +5,7 @@ import { UPDATE_CUSTOMER_MODAL } from './admin-customers.constants';
 import { APP_CONFIRM } from '../../components/app-confirm';
 import { META_THUNK } from '../../app.constants';
 import { AdminTableActions } from '../admin-table-actions';
+import identity from 'lodash/identity';
 
 export const useAdminCustomersLogic = () => {
   const {
@@ -20,7 +21,7 @@ export const useAdminCustomersLogic = () => {
 
   const customers = useMemo(
     () =>
-    customerList
+      customerList
         ? Object.keys(customerList).map((key) => customerList[key])
         : [],
     [customerList],
@@ -29,8 +30,7 @@ export const useAdminCustomersLogic = () => {
   const onAddClick = useCallback(() => {
     setIdToUpdate(null);
     ShowModal(UPDATE_CUSTOMER_MODAL);
-    GetCustomerListRequest();
-  }, [ShowModal, GetCustomerListRequest]);
+  }, [ShowModal]);
 
   const ResetDelete = useCallback(() => {
     setIdToDelete(null);
@@ -40,8 +40,7 @@ export const useAdminCustomersLogic = () => {
   const onConfirmDelete = useCallback(async () => {
     await DeleteCustomerRequest(idToDelete, META_THUNK);
     ResetDelete();
-    GetCustomerListRequest();
-  }, [DeleteCustomerRequest, idToDelete, GetCustomerListRequest, ResetDelete]);
+  }, [DeleteCustomerRequest, idToDelete, ResetDelete]);
 
   const onEditClick = useCallback(
     (id: string) => {
@@ -64,26 +63,43 @@ export const useAdminCustomersLogic = () => {
       {
         dataField: 'code',
         label: 'Код ЄДРОПУ',
-        formatter: (value: string) => value,
+        formatter: identity,
       },
       {
         dataField: 'name',
         label: 'Найменування',
-        formatter: (value: string) => value,
+        formatter: identity,
       },
       {
         dataField: 'rr',
         label: 'РР',
-        formatter: (value: string) => value,
+        formatter: identity,
+      },
+      {
+        dataField: 'address',
+        label: 'Адреса',
+        formatter: identity,
+      },
+      {
+        dataField: 'phone',
+        label: 'Телефон',
+        formatter: identity,
+      },
+      {
+        dataField: 'ipn',
+        label: 'ІПН',
+        formatter: identity,
+      },
+      {
+        dataField: 'mfo',
+        label: 'МФО',
+        formatter: identity,
       },
       {
         dataField: 'id',
         label: '',
         formatter: (value: string) => (
-          <AdminTableActions
-            id={value}
-            {...{ onEditClick, onDeleteClick }}
-          />
+          <AdminTableActions id={value} {...{ onEditClick, onDeleteClick }} />
         ),
       },
     ],

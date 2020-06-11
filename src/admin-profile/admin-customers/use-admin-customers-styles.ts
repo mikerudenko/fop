@@ -4,7 +4,6 @@ export const useAdminCustomersStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       position: 'relative',
-      maxWidth: 1000,
       margin: '0 auto',
     },
     controls: {

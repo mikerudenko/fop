@@ -10,7 +10,7 @@ export const NotFound = memo(() => {
   const classes = useNotFoundStyles();
   return (
     <DocumentTitle title='Сторінка не знайдена'>
-      <AppContainer containerClass={classes.container}>
+      <AppContainer>
         <h2 className={classes.title}>Сторінка не знайдена</h2>
         <div className={classes.imageContainer}>
           <img src={StatusImage} alt='404' className={classes.status} />

@@ -14,11 +14,9 @@ const getNewProduct = () => ({
 });
 
 export const useUpdateProductModalLogic = (idToUpdate: null | string) => {
-  const {
-    UpdateProductRequest,
-    currentProduct,
-    GetProductListRequest,
-  } = useProductsConnect(idToUpdate);
+  const { UpdateProductRequest, currentProduct } = useProductsConnect(
+    idToUpdate,
+  );
   const { modalStatus, HideModal } = useModalConnect(UPDATE_PRODUCT_MODAL);
   const title = idToUpdate ? 'Редагування продукту' : 'Створення продукту';
   const initialValues = idToUpdate ? currentProduct : getNewProduct();
@@ -30,9 +28,8 @@ export const useUpdateProductModalLogic = (idToUpdate: null | string) => {
         META_THUNK,
       );
       HideModal(UPDATE_PRODUCT_MODAL);
-      GetProductListRequest();
     },
-    [UpdateProductRequest, GetProductListRequest, HideModal],
+    [UpdateProductRequest, HideModal],
   );
 
   return {

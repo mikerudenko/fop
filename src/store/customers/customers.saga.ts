@@ -40,7 +40,7 @@ export function* updateCustomerSaga(
 ) {
   try {
     yield call(updateCustomer, action.payload);
-    yield put(UpdateCustomerSuccess(null, action.meta));
+    yield put(UpdateCustomerSuccess(action.payload, action.meta));
     yield put(showSuccessNotification('Споживач успішно відредагований'));
   } catch {
     yield put(
@@ -55,7 +55,7 @@ export function* deleteCustomerSaga(
 ) {
   try {
     yield call(deleteCustomer, action.payload);
-    yield put(DeleteCustomerSuccess(null, action.meta));
+    yield put(DeleteCustomerSuccess(action.payload, action.meta));
     yield put(showSuccessNotification('Споживача успішно видалено'));
   } catch {
     yield put(showErrorNotification('Помилка при видаленні, спробуйте ще раз'));

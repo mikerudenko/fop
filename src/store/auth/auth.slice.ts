@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { noopAction, prepareAction } from '../../store-utils';
-import { MetaThunk } from '../../app.types';
 
 export const AuthSlice = createSlice({
   name: 'auth',
@@ -20,7 +19,7 @@ export const AuthSlice = createSlice({
     SignOutRequest: noopAction,
     SignOutSuccess: {
       prepare: prepareAction,
-      reducer: (state, action: PayloadAction<null, string, MetaThunk>) => {
+      reducer: (state) => {
         state.user = null;
       },
     },

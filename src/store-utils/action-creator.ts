@@ -3,7 +3,7 @@ import { MetaThunk } from '../app.types';
 
 export const prepareAction = <T>(
   payload: T,
-  meta?: any & MetaThunk,
+  meta?: MetaThunk,
   error?: boolean,
 ) => ({
   payload,
@@ -15,3 +15,8 @@ export const noopAction = {
   reducer: noop,
   prepare: prepareAction,
 };
+
+// export const actionWithMeta = (reducer: ActionCreatorWithoutPayload<string>) => ({
+//   reducer: reducer,
+//   prepare: prepareAction,
+// });

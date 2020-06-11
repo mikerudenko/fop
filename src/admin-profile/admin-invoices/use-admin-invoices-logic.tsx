@@ -36,8 +36,7 @@ export const useAdminInvoicesLogic = () => {
   const onConfirmDelete = useCallback(async () => {
     await DeleteInvoiceRequest(idToDelete, META_THUNK);
     ResetDelete();
-    GetInvoiceListRequest();
-  }, [DeleteInvoiceRequest, idToDelete, GetInvoiceListRequest, ResetDelete]);
+  }, [DeleteInvoiceRequest, idToDelete, ResetDelete]);
 
   const onEditClick = useCallback(
     (id: string) => {
