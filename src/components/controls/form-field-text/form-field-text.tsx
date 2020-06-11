@@ -15,10 +15,19 @@ export type AppFieldTextProps = {
   multiline?: boolean;
   disabled?: boolean;
   rows?: number;
+  className?: string;
 };
 
 export const FormFieldText = memo(
-  ({ name, type, label, multiline, rows, disabled }: AppFieldTextProps) => {
+  ({
+    name,
+    type,
+    label,
+    multiline,
+    rows,
+    disabled,
+    className,
+  }: AppFieldTextProps) => {
     const {
       register,
       errors,
@@ -28,7 +37,10 @@ export const FormFieldText = memo(
     const { showError, error } = hasError({ errors, name, dirty });
 
     return (
-      <FormControl error={showError} className={c(classes.formControl)}>
+      <FormControl
+        error={showError}
+        className={c(classes.formControl, className)}
+      >
         <TextField
           {...{
             inputRef: register,

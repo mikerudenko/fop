@@ -57,7 +57,7 @@ export const useAdminInvoicesLogic = () => {
     () => [
       {
         dataField: 'id',
-        label: 'Номер накладної',
+        label: 'Номер рахунку',
         formatter: (value: string) => value,
       },
       {

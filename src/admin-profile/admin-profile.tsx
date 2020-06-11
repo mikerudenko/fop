@@ -1,15 +1,15 @@
 import React, { memo } from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 
-import { ROUTES } from '../../app.constants';
-import { AppContainer } from '../../components/app-container';
-import { useAppAdminProfileStyles } from '../use-admin-profile-styles';
-import { AppTabs } from '../../components/app-tabs';
-import { AdminProducts } from '../admin-products';
-import { AdminCustomers } from '../admin-customers';
-import { AdminInvoices } from '../admin-invoices';
-import { CreateInvoice } from '../create-invoice/create-invoice';
-import { EditInvoice } from '../edit-invoice';
+import { ROUTES } from '../app.constants';
+import { AppContainer } from '../components/app-container';
+import { useAppAdminProfileStyles } from './use-admin-profile-styles';
+import { AppTabs } from '../components/app-tabs';
+import { AdminProducts } from './admin-products';
+import { AdminCustomers } from './admin-customers';
+import { AdminInvoices } from './admin-invoices';
+import { CreateInvoice } from './create-invoice/create-invoice';
+import { EditInvoice } from './edit-invoice';
 
 const urlList = {
   products: ROUTES.admin + ROUTES.products,
@@ -29,7 +29,7 @@ const tabs = [
     to: urlList.customers,
   },
   {
-    label: 'Накладні',
+    label: 'Рахунки',
     to: urlList.invoices,
   },
 ];

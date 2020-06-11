@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { noopAction, prepareAction } from '../../store-utils';
+import { AuthData } from '../../api';
 
 export const AuthSlice = createSlice({
   name: 'auth',
   initialState: {
     user: null as any,
+    authData: {},
   },
   reducers: {
     AuthRequest: noopAction,
@@ -15,7 +17,19 @@ export const AuthSlice = createSlice({
       },
       prepare: prepareAction,
     },
-
+    GetAuthDataRequest: () => {},
+    GetAuthDataSuccess: (state, action: PayloadAction<AuthData>) => {
+      state.authData = action.payload;
+    },
+    GetAuthDataError: noopAction,
+    UpdateAuthDataRequest: noopAction,
+    UpdateAuthDataSuccess: (
+      state,
+      action: PayloadAction<Partial<AuthData>>,
+    ) => {
+      state.authData = { ...state.authData, ...action.payload };
+    },
+    UpdateAuthDataError: noopAction,
     SignOutRequest: noopAction,
     SignOutSuccess: {
       prepare: prepareAction,

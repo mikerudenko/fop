@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import { FormFields, FormFieldType } from './form-field.constants';
+import { AppSelectOptionType } from '../app-select';
 
 export type FormFieldProps = {
   type: FormFieldType;
@@ -10,6 +11,8 @@ export type FormFieldProps = {
   rows?: number;
   disabled?: boolean;
   mask?: 'phone';
+  className?: string;
+  options?: AppSelectOptionType[];
 };
 
 export const FormField = memo(({ type, ...rest }: FormFieldProps) => {

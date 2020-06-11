@@ -10,7 +10,8 @@ import { SignIn } from '../sign-in';
 import { useAuthConnect } from '../store/auth';
 import { useNotificationsLogic } from '../store/notifications';
 import { useRootStyles } from './use-root-styles';
-import { AdminProfile } from '../admin-profile/invoice-form/admin-profile';
+import { AdminProfile } from '../admin-profile/admin-profile';
+import uaLocale from 'date-fns/locale/uk';
 
 export const Root = memo(() => {
   const location = useLocation();
@@ -26,7 +27,7 @@ export const Root = memo(() => {
   const hasAccess = !!user;
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils} locale='ua'>
+    <MuiPickersUtilsProvider utils={DateFnsUtils} locale={uaLocale}>
       <Switch>
         <Route path='/' exact component={SignIn} />
         <ProtectedRoute

@@ -1,6 +1,6 @@
 import { push } from 'connected-react-router';
 import get from 'lodash/get';
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 
 import {
@@ -8,6 +8,8 @@ import {
   setLocalPersistence,
   signInWithCredentials,
   signOut,
+  getAuthData,
+  updateAuthData,
 } from '../../api/api-auth';
 import { ROUTES } from '../../app.constants';
 import {
@@ -18,7 +20,7 @@ import { AuthSlice } from './auth.slice';
 
 import { AUTH_ERROR_NOTIFICATIONS } from './auth.constants';
 import { MetaThunk } from '../../app.types';
-import { CredentialsPayload } from '../../api/api-auth.types';
+import { CredentialsPayload, AuthData } from '../../api/api-auth.types';
 
 const {
   AuthRequest,
@@ -27,6 +29,12 @@ const {
   SignOutRequest,
   SignOutSuccess,
   SignOutError,
+  GetAuthDataRequest,
+  GetAuthDataSuccess,
+  GetAuthDataError,
+  UpdateAuthDataRequest,
+  UpdateAuthDataSuccess,
+  UpdateAuthDataError,
 } = AuthSlice.actions;
 
 const AuthStrategy: any = {
@@ -67,7 +75,27 @@ export function* signOutSaga(action: PayloadAction<void, string, MetaThunk>) {
   }
 }
 
+export function* getAuthDataSaga() {
+  try {
+    const data = yield call(getAuthData);
+    yield put(GetAuthDataSuccess(data));
+  } catch (error) {
+    yield put(GetAuthDataError(null));
+  }
+}
+
+export function* updateAuthDataSaga(action: PayloadAction<Partial<AuthData>>) {
+  try {
+    yield call(updateAuthData, action.payload);
+    yield put(UpdateAuthDataSuccess(action.payload));
+  } catch {
+    yield put(UpdateAuthDataError(null));
+  }
+}
+
 export const AuthSagas = [
   takeEvery(AuthRequest.type, authSaga),
   takeEvery(SignOutRequest.type, signOutSaga),
+  takeEvery(UpdateAuthDataRequest.type, updateAuthDataSaga),
+  takeLatest(GetAuthDataRequest.type, getAuthDataSaga),
 ];

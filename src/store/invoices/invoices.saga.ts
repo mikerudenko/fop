@@ -30,7 +30,7 @@ export function* getInvoiceListSaga() {
     const invoices = yield call(getInvoiceList);
     yield put(GetInvoiceListSuccess(invoices));
   } catch (error) {
-    yield put(showErrorNotification('Помилка при отриманні списку накладних'));
+    yield put(showErrorNotification('Помилка при отриманні списку рахунків'));
     yield put(GetInvoiceListError());
   }
 }
@@ -41,7 +41,7 @@ export function* updateInvoiceSaga(
   try {
     yield call(updateInvoice, action.payload);
     yield put(UpdateInvoiceSuccess(null, action.meta));
-    yield put(showSuccessNotification('Накладну успішно відредагований'));
+    yield put(showSuccessNotification('Рахунок успішно відредаговано'));
   } catch {
     yield put(
       showErrorNotification('Помилка при редагуванні, спробуйте ще раз'),
@@ -56,7 +56,7 @@ export function* deleteInvoiceSaga(
   try {
     yield call(deleteInvoice, action.payload);
     yield put(DeleteInvoiceSuccess(null, action.meta));
-    yield put(showSuccessNotification('Накладну успішно видалено'));
+    yield put(showSuccessNotification('Рахунок успішно видалено'));
   } catch {
     yield put(showErrorNotification('Помилка при видаленні, спробуйте ще раз'));
     yield put(DeleteInvoiceError(null, action.meta, true));

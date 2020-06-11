@@ -6,7 +6,7 @@ import { META_THUNK } from '../app.constants';
 import { useForm } from 'react-hook-form';
 
 export const useSignInLogic = () => {
-  const { AuthRequest } = useAuthConnect();
+  const { AuthRequest, GetAuthDataRequest } = useAuthConnect();
   const { setError } = useForm();
 
   const onSubmit = useCallback(
@@ -16,11 +16,12 @@ export const useSignInLogic = () => {
           ...META_THUNK,
           strategy: 'sign-in',
         } as any);
+        GetAuthDataRequest();
       } catch (error) {
         setError(resolveServerError(error));
       }
     },
-    [AuthRequest, setError],
+    [AuthRequest, setError, GetAuthDataRequest],
   );
 
   return {

@@ -1,7 +1,7 @@
 import firebase, { User } from 'firebase';
 import get from 'lodash/get';
-
-import { CredentialsPayload } from './api-auth.types';
+import { firebaseFirestore } from '../services/firebase-service';
+import { CredentialsPayload, AuthData } from './api-auth.types';
 import { firebaseAuth } from '../services/firebase-service';
 
 export const signInWithCredentials = ({
@@ -33,3 +33,15 @@ export const sendPasswordResetEmail = (email: string) =>
 
 export const setLocale = (locale: string) =>
   (firebaseAuth.languageCode = locale);
+
+export const getAuthData = async () => {
+  const ref = await firebaseFirestore.collection('auth').doc('data').get();
+
+  return ref.data();
+};
+
+export const updateAuthData = async (authData: Partial<AuthData>) =>
+  firebaseFirestore
+    .collection('auth')
+    .doc('data')
+    .set(authData, { merge: true });

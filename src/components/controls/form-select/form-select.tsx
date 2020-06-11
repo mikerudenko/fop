@@ -31,8 +31,8 @@ export const FormSelect = memo(({ name, ...rest }: FormSelectProps) => {
 
   return (
     <AppSelect
-      register={register}
       {...{
+        register,
         name,
         showError,
         error,

@@ -13,6 +13,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { AppTheme } from './app.constants';
 import { configureStore } from './store';
 import { Root } from './root';
+
 export const history = createBrowserHistory();
 
 const jss = create({

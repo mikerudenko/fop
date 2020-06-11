@@ -21,7 +21,7 @@ export const AdminInvoices = memo(() => {
     <div className={classes.container}>
       <div className={classes.controls}>
         <Button color='primary' variant='contained' onClick={onAddClick}>
-          Створити накладну
+          Створити рахунок
         </Button>
       </div>
       <AppTable
@@ -33,7 +33,7 @@ export const AdminInvoices = memo(() => {
         }}
       />
       <AppConfirm
-        content='Ви дійсно бажаєте видалити дану накладну?'
+        content='Ви дійсно бажаєте видалити даний рахунок?'
         title='Увага! Видалення'
         onConfirmClick={onConfirmDelete}
         onCancelClick={onCancelDelete}

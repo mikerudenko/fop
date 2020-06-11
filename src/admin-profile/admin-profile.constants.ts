@@ -8,7 +8,8 @@ export const getInitialInvocieValues = () => {
     id,
     products: [],
     status: 'pending',
-    customerId: '',
+    payerId: '',
+    addition: '',
     date: date.toISOString(),
   } as Invoice;
 };
