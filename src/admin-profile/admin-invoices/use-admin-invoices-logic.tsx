@@ -3,8 +3,6 @@ import { useInvoicesConnect } from '../../store/invoices';
 import { useModalConnect } from '../../store/modal';
 import { APP_CONFIRM } from '../../components/app-confirm';
 import { META_THUNK, ROUTES } from '../../app.constants';
-import { Invoice } from '../../api';
-import { AppLink } from '../../components/app-link';
 import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { AdminTableActions } from '../admin-table-actions';
@@ -61,21 +59,13 @@ export const useAdminInvoicesLogic = () => {
         formatter: (value: string) => value,
       },
       {
-        dataField: 'name',
-        label: 'Найменування',
-        formatter: (value: string, { id }: Invoice) => (
-          <AppLink
-            to={`${ROUTES.admin}${ROUTES.invoices}/${id}`}
-            variant='body2'
-            text={value}
-          />
-        ),
-      },
-      {
         dataField: 'actions',
         label: '',
-        formatter: (value: string) => (
-          <AdminTableActions id={value} {...{ onDeleteClick, onEditClick }} />
+        formatter: (value: string, values: any) => (
+          <AdminTableActions
+            id={values.id as string}
+            {...{ onDeleteClick, onEditClick }}
+          />
         ),
       },
     ],

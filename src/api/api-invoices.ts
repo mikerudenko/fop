@@ -3,7 +3,10 @@ import { Dictionary } from '@reduxjs/toolkit';
 import { Invoice } from './api-invoices.types';
 
 export const updateInvoice = ({ id, ...rest }: Invoice) =>
-  firebaseFirestore.collection('invoices').doc(id).set(rest, { merge: true });
+  firebaseFirestore
+    .collection('invoices')
+    .doc(id as string)
+    .set(rest, { merge: true });
 
 export const getInvoiceList = async () => {
   const invoices: Dictionary<Invoice> = {};

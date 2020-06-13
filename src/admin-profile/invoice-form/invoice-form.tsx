@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Invoice } from '../../api';
+import { Invoice, Product } from '../../api';
 import { AppForm } from '../../components/app-form';
 import { useInvoiceFormLogic } from './use-invoice-form-logic';
 import { AppLink } from '../../components/app-link';
@@ -8,7 +8,11 @@ import { ROUTES } from '../../app.constants';
 import Grid from '@material-ui/core/Grid';
 import { FormField } from '../../components/controls/form-field';
 import { invoiceStatusSelectList } from './invoice-form.constants';
+import { ProductsTable } from '../../components/products-table';
 import { InvoiceCurrentProduct } from './invoice-current-product';
+import { AppSubmitButton } from '../../components/app-button';
+import { Dictionary } from '@reduxjs/toolkit';
+import { AppLoader } from '../../components/app-loader/app-loader';
 
 type InvoiceFormProps = {
   initialValues: Invoice;
@@ -16,11 +20,37 @@ type InvoiceFormProps = {
 };
 
 export const InvoiceForm = memo(({ initialValues }: InvoiceFormProps) => {
-  const { onSubmit, customerSelectList } = useInvoiceFormLogic();
+  const {
+    onSubmit,
+    customerSelectList,
+    appendProduct,
+    removeProduct,
+    products,
+    productSelectList,
+    productList,
+    loading,
+  } = useInvoiceFormLogic(initialValues);
   const classes = useInvoiceFormStyles();
 
+  const formConfig = {
+    defaultValues: {
+      date: new Date(initialValues.date),
+      addition: initialValues.addition,
+      status: invoiceStatusSelectList.find(
+        ({ value }) => value === initialValues.status,
+      ),
+      payerId: customerSelectList.find(
+        ({ value }) => value === initialValues.payerId,
+      ),
+    },
+  };
+
+  if (loading) {
+    return <AppLoader />;
+  }
+
   return (
-    <>
+    <div className={classes.formWrapper}>
       <div className={classes.topBar}>
         <AppLink
           variant='subtitle1'
@@ -29,7 +59,7 @@ export const InvoiceForm = memo(({ initialValues }: InvoiceFormProps) => {
           text='Назад'
         />
       </div>
-      <AppForm onSubmit={onSubmit}>
+      <AppForm onSubmit={onSubmit} formConfig={formConfig}>
         <Grid container spacing={3}>
           <Grid item xs={6}>
             <FormField name='date' type='date' required label='Від' />
@@ -43,7 +73,7 @@ export const InvoiceForm = memo(({ initialValues }: InvoiceFormProps) => {
           </Grid>
           <Grid item xs={6}>
             <FormField
-              name='status'
+              name='payerId'
               type='autocomplete'
               required
               label='Платник'
@@ -56,9 +86,23 @@ export const InvoiceForm = memo(({ initialValues }: InvoiceFormProps) => {
               label='Доповнення'
             />
           </Grid>
-          <InvoiceCurrentProduct />
+          <InvoiceCurrentProduct
+            appendProduct={appendProduct}
+            productSelectList={productSelectList}
+            productList={productList as Dictionary<Product>}
+          />
+          <Grid item xs={12}>
+            <ProductsTable
+              showActions
+              products={products}
+              removeProduct={removeProduct}
+            />
+          </Grid>
+          <Grid item md={4}>
+            <AppSubmitButton color='primary' text='Зберегти' />
+          </Grid>
         </Grid>
       </AppForm>
-    </>
+    </div>
   );
 });

@@ -40,11 +40,13 @@ export function* updateInvoiceSaga(
 ) {
   try {
     yield call(updateInvoice, action.payload);
-    yield put(UpdateInvoiceSuccess(null, action.meta));
+    yield put(UpdateInvoiceSuccess(action.payload, action.meta));
     yield put(showSuccessNotification('Рахунок успішно відредаговано'));
   } catch {
     yield put(
-      showErrorNotification('Помилка при редагуванні, спробуйте ще раз'),
+      showErrorNotification(
+        'Помилка при редагуванні рахунку, спробуйте ще раз',
+      ),
     );
     yield put(UpdateInvoiceError(null, action.meta, true));
   }
@@ -55,10 +57,12 @@ export function* deleteInvoiceSaga(
 ) {
   try {
     yield call(deleteInvoice, action.payload);
-    yield put(DeleteInvoiceSuccess(null, action.meta));
+    yield put(DeleteInvoiceSuccess(action.payload, action.meta));
     yield put(showSuccessNotification('Рахунок успішно видалено'));
   } catch {
-    yield put(showErrorNotification('Помилка при видаленні, спробуйте ще раз'));
+    yield put(
+      showErrorNotification('Помилка при видаленні рахунку, спробуйте ще раз'),
+    );
     yield put(DeleteInvoiceError(null, action.meta, true));
   }
 }

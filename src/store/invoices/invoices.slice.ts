@@ -1,6 +1,6 @@
 import { createSlice, Dictionary, PayloadAction } from '@reduxjs/toolkit';
 import { Invoice } from '../../api';
-import { NetworkStatus, noopAction } from '../../store-utils';
+import { NetworkStatus, noopAction, prepareAction } from '../../store-utils';
 import { InvoicesState } from './invoices.types';
 
 export const InvoicesSlice = createSlice({
@@ -26,10 +26,20 @@ export const InvoicesSlice = createSlice({
       state.list.networkStatus = NetworkStatus.Error;
     },
     UpdateInvoiceRequest: noopAction,
-    UpdateInvoiceSuccess: noopAction,
+    UpdateInvoiceSuccess: {
+      prepare: prepareAction,
+      reducer: (state, action) => {
+        state.list.data![action.payload.id] = action.payload as Invoice;
+      },
+    },
     UpdateInvoiceError: noopAction,
     DeleteInvoiceRequest: noopAction,
-    DeleteInvoiceSuccess: noopAction,
+    DeleteInvoiceSuccess: {
+      prepare: prepareAction,
+      reducer: (state, action) => {
+        delete state.list.data![action.payload as string];
+      },
+    },
     DeleteInvoiceError: noopAction,
   },
 });

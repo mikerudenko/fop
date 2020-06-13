@@ -1,65 +1,72 @@
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import React, { memo, useCallback, useEffect, useMemo } from 'react';
+import { multiply, format } from 'mathjs';
+import React, { memo, useCallback } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { FormField } from '../../../components/controls/form-field';
-import { useProductsConnect } from '../../../store/products';
 import { useInvoiceCurrentProductStyles } from './use-invoice-current-product-styles';
+import { AppSelectOptionType } from '../../../components/controls/app-select';
+import { Dictionary } from '@reduxjs/toolkit';
+import { Product } from '../../../api';
 
-export const InvoiceCurrentProduct = memo(() => {
-  const { getValues } = useFormContext();
-  const { productList, GetProductListRequest } = useProductsConnect();
-  const classes = useInvoiceCurrentProductStyles();
+type InvoiceCurrentProductProps = {
+  appendProduct(products: any): void;
+  productSelectList: AppSelectOptionType[];
+  productList: Dictionary<Product>;
+};
 
-  const productSelectList = useMemo(
-    () =>
-      productList
-        ? Object.keys(productList).map((key) => ({
-            value: productList[key]!.id,
-            label: productList[key]!.name,
-          }))
-        : [],
-    [productList],
-  );
+export const InvoiceCurrentProduct = memo(
+  ({
+    appendProduct,
+    productSelectList,
+    productList,
+  }: InvoiceCurrentProductProps) => {
+    const classes = useInvoiceCurrentProductStyles();
+    const { getValues, setValue } = useFormContext();
 
-  const onAddProductClick = useCallback(() => {
-    const { currentProduct, currentProductCount } = getValues();
-    debugger;
-  }, [getValues]);
+    const onAddProductClick = useCallback(() => {
+      const { currentProduct, quantity } = getValues();
+      if (!currentProduct || !quantity) {
+        return;
+      }
 
-  useEffect(() => {
-    if (!productList) {
-      GetProductListRequest();
-    }
-  }, [productList, GetProductListRequest]);
+      const product = productList![currentProduct.value as string];
+      const sum = Number(
+        format(multiply(Number(quantity), product!.price), { precision: 14 }),
+      );
 
-  return (
-    <Grid item xs={12}>
-      <div className={classes.container}>
-        <FormField
-          name='currentProduct'
-          type='autocomplete'
-          required
-          options={productSelectList}
-          label='Виберіть товар'
-          className={classes.productInput}
-        />
-        <FormField
-          name='currentProductCount'
-          type='number'
-          required
-          label='Вкажіть кількість'
-          className={classes.countInput}
-        />
-        <Button
-          color='primary'
-          variant='contained'
-          onClick={onAddProductClick}
-          className={classes.button}
-        >
-          Додати у таблицю
-        </Button>
-      </div>
-    </Grid>
-  );
-});
+      appendProduct({ ...product, quatity: Number(quantity), sum });
+      setValue('quantity', '');
+    }, [getValues, appendProduct, productList, setValue]);
+
+    return (
+      <Grid item xs={12}>
+        <div className={classes.container}>
+          <FormField
+            name='currentProduct'
+            type='autocomplete'
+            required
+            options={productSelectList}
+            label='Виберіть товар'
+            className={classes.productInput}
+          />
+          <FormField
+            name='quantity'
+            type='number'
+            required
+            label='Вкажіть кількість'
+            className={classes.countInput}
+          />
+          <Button
+            color='primary'
+            variant='contained'
+            onClick={onAddProductClick}
+            className={classes.button}
+          >
+            Додати у таблицю
+          </Button>
+        </div>
+      </Grid>
+    );
+  },
+);

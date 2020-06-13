@@ -9,4 +9,7 @@ export const useInvoiceFormStyles = makeStyles({
   topBar: {
     display: 'flex',
   },
+  formWrapper: {
+    paddingBottom: 50,
+  },
 });

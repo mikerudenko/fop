@@ -40,11 +40,11 @@ export const AdminProfile = memo(() => {
     <AppContainer>
       <AppTabs {...{ tabs }} isRouter wrapperClassName={classes.wrapper}>
         <Switch>
-          <Route path={urlList.products} component={AdminProducts} />
-          <Route path={urlList.customers} component={AdminCustomers} />
-          <Route path={urlList.invoices} component={AdminInvoices} />
-          <Route path={urlList.createInvoice} component={CreateInvoice} />
-          <Route path={urlList.editInvoice} component={EditInvoice} />
+          <Route path={urlList.products} exact component={AdminProducts} />
+          <Route path={urlList.customers} exact component={AdminCustomers} />
+          <Route path={urlList.invoices} exact component={AdminInvoices} />
+          <Route path={urlList.createInvoice} exact component={CreateInvoice} />
+          <Route path={urlList.editInvoice} exact component={EditInvoice} />
           <Redirect to={urlList.products} />
         </Switch>
       </AppTabs>

@@ -40,11 +40,11 @@ export function* updateProductSaga(
 ) {
   try {
     yield call(updateProduct, action.payload);
-    yield put(UpdateProductSuccess(null, action.meta));
+    yield put(UpdateProductSuccess(action.payload, action.meta));
     yield put(showSuccessNotification('Товар успішно відредагований'));
-  } catch {
+  } catch (e) {
     yield put(
-      showErrorNotification('Помилка при редагуванні, спробуйте ще раз'),
+      showErrorNotification('Помилка при редагуванні товару, спробуйте ще раз'),
     );
     yield put(UpdateProductError(null, action.meta, true));
   }
@@ -55,7 +55,7 @@ export function* deleteProductSaga(
 ) {
   try {
     yield call(deleteProduct, action.payload);
-    yield put(DeleteProductSuccess(null, action.meta));
+    yield put(DeleteProductSuccess(action.payload, action.meta));
     yield put(showSuccessNotification('Товар успішно видалено'));
   } catch {
     yield put(showErrorNotification('Помилка при видаленні, спробуйте ще раз'));

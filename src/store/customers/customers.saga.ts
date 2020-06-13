@@ -44,7 +44,9 @@ export function* updateCustomerSaga(
     yield put(showSuccessNotification('Споживач успішно відредагований'));
   } catch {
     yield put(
-      showErrorNotification('Помилка при редагуванні, спробуйте ще раз'),
+      showErrorNotification(
+        'Помилка при редагуванні споживача, спробуйте ще раз',
+      ),
     );
     yield put(UpdateCustomerError(null, action.meta, true));
   }
@@ -58,7 +60,11 @@ export function* deleteCustomerSaga(
     yield put(DeleteCustomerSuccess(action.payload, action.meta));
     yield put(showSuccessNotification('Споживача успішно видалено'));
   } catch {
-    yield put(showErrorNotification('Помилка при видаленні, спробуйте ще раз'));
+    yield put(
+      showErrorNotification(
+        'Помилка при видаленні споживача, спробуйте ще раз',
+      ),
+    );
     yield put(DeleteCustomerError(null, action.meta, true));
   }
 }

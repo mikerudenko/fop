@@ -2,10 +2,9 @@ import { Invoice } from '../api';
 
 export const getInitialInvocieValues = () => {
   const date = new Date();
-  const id = String(date);
 
   return {
-    id,
+    id: null,
     products: [],
     status: 'pending',
     payerId: '',

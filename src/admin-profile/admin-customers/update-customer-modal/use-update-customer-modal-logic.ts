@@ -27,7 +27,6 @@ export const useUpdateCustomerModalLogic = (idToUpdate: null | string) => {
 
   const onSubmit = useCallback(
     async (payload: Customer) => {
-      debugger;
       await UpdateCustomerRequest(payload, META_THUNK);
       HideModal(UPDATE_CUSTOMER_MODAL);
     },

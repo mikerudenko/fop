@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 
 import { FormFieldError } from '../form-field-error';
 import { hasError } from '../../../services/form-service';
-import { NumberFormatCustom } from './number-format-custom';
+// import { NumberFormatCustom } from './number-format-custom';
 import { useFormFieldNumberStyles } from './use-form-field-number-styles';
 import { useFormContext } from 'react-hook-form';
 
@@ -37,8 +37,9 @@ export const FormFieldNumber = memo(
             label,
           }}
           variant='outlined'
+          inputProps={{ step: '0.01' }}
+          type='number'
           error={showError}
-          InputProps={{ inputComponent: NumberFormatCustom as any }}
           className={classes.input}
         />
         <FormFieldError
