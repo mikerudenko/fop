@@ -8,7 +8,7 @@ export type InvoiceProduct = {
 
 export type Invoice = {
   date: string;
-  id: string | null;
+  id: string;
   products: InvoiceProduct[];
   payerId: string;
   addition: string;

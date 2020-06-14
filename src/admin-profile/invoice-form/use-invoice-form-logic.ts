@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
+import { useAutoMemo, useAutoCallback, useAutoEffect } from 'hooks.macro';
 import { Invoice, InvoiceProduct } from '../../api';
 import { META_THUNK, ROUTES } from '../../app.constants';
 import { useAuthConnect } from '../../store/auth';
@@ -8,14 +9,11 @@ import { useNotificationsConnect } from '../../store/notifications/use-notificat
 import { useProductsConnect } from '../../store/products';
 import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
+import { transformEntityToList } from '../../services/helper-service';
 
 export const useInvoiceFormLogic = (initialValues: Invoice) => {
   const { customerList, GetCustomerListRequest } = useCustomersConnect();
-  const {
-    authData,
-    GetAuthDataRequest,
-    UpdateAuthDataRequest,
-  } = useAuthConnect();
+  const { UpdateAuthDataRequest } = useAuthConnect();
   const { showErrorNotification } = useNotificationsConnect();
   const { productList, GetProductListRequest } = useProductsConnect();
   const { UpdateInvoiceRequest } = useInvoicesConnect();
@@ -23,102 +21,63 @@ export const useInvoiceFormLogic = (initialValues: Invoice) => {
   const [products, setProducts] = useState<InvoiceProduct[]>(
     initialValues.products,
   );
-  const onSubmit = useCallback(
-    async (payload: any) => {
-      const payerId = payload?.payerId?.value;
-      const addition = payload?.addition;
-      const status = payload?.status?.value;
-      const date = payload.date?.toISOString();
+  const onSubmit = useAutoCallback(async (payload: any) => {
+    const payerId = payload?.payerId?.value;
+    const addition = payload?.addition;
+    const status = payload?.status?.value;
+    const date = payload.date?.toISOString();
 
-      if (
-        [payerId, status, date].includes(null) ||
-        [payerId, status, date].includes(undefined) ||
-        !authData
-      ) {
-        showErrorNotification('Не всі поля заповнені');
-      } else {
-        const lastInvocieNumber = authData.lastInvocieNumber + 1;
+    if (
+      [payerId, status, date].includes(null) ||
+      [payerId, status, date].includes(undefined)
+    ) {
+      showErrorNotification('Не всі поля заповнені');
+    } else {
+      await UpdateInvoiceRequest(
+        {
+          id: initialValues.id,
+          date,
+          status,
+          payerId,
+          addition,
+          products,
+        },
+        META_THUNK,
+      );
+      await UpdateAuthDataRequest({
+        lastInvocieNumber: initialValues.id,
+      });
+      dispatch(push(ROUTES.admin + ROUTES.invoices));
+    }
+  });
 
-        await UpdateInvoiceRequest(
-          {
-            id: initialValues.id || String(lastInvocieNumber),
-            date,
-            status,
-            payerId,
-            addition,
-            products,
-          },
-          META_THUNK,
-        );
-        await UpdateAuthDataRequest({
-          lastInvocieNumber: lastInvocieNumber,
-        });
-        dispatch(push(ROUTES.admin + ROUTES.invoices));
-      }
-    },
-    [
-      dispatch,
-      UpdateInvoiceRequest,
-      products,
-      showErrorNotification,
-      UpdateAuthDataRequest,
-      authData,
-      initialValues.id,
-    ],
+  const customerSelectList = useAutoMemo(() =>
+    transformEntityToList(customerList),
   );
 
-  const customerSelectList = useMemo(
-    () =>
-      customerList
-        ? Object.keys(customerList).map((key) => ({
-            value: customerList[key]!.id,
-            label: customerList[key]!.name,
-          }))
-        : [],
-    [customerList],
+  const productSelectList = useAutoMemo(() =>
+    transformEntityToList(productList),
   );
 
-  const productSelectList = useMemo(
-    () =>
-      productList
-        ? Object.keys(productList).map((key) => ({
-            value: productList[key]!.id,
-            label: productList[key]!.name,
-          }))
-        : [],
-    [productList],
-  );
-
-  const appendProduct = useCallback((product: InvoiceProduct) => {
+  const appendProduct = useAutoCallback((product: InvoiceProduct) => {
     setProducts((state) => [...state, product]);
-  }, []);
+  });
 
-  const removeProduct = useCallback((index: number) => {
+  const removeProduct = useAutoCallback((index: number) => {
     setProducts((state) => state.filter((_, i) => i !== index));
-  }, []);
+  });
 
-  useEffect(() => {
+  useAutoEffect(() => {
     if (!customerList) {
       GetCustomerListRequest();
-    }
-
-    if (!authData) {
-      GetAuthDataRequest();
     }
 
     if (!productList) {
       GetProductListRequest();
     }
-  }, [
-    GetCustomerListRequest,
-    customerList,
-    GetAuthDataRequest,
-    authData,
-    productList,
-    GetProductListRequest,
-  ]);
+  });
 
-  const loading = !customerList || !authData || !productList;
+  const loading = !customerList || !productList;
 
   return {
     onSubmit,
