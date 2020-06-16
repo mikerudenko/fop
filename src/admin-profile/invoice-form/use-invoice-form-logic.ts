@@ -27,8 +27,6 @@ export const useInvoiceFormLogic = (initialValues: Invoice) => {
   const onSubmit = useAutoCallback(async (payload: any) => {
     const { payerId, addition, status, date } = payload;
 
-    debugger;
-
     if (
       getArrayIntersection([payerId, status, date], [null, undefined]).length
     ) {

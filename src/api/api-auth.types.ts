@@ -4,7 +4,7 @@ export interface CredentialsPayload {
 }
 
 export type AuthData = {
-  bamk: string;
+  bank: string;
   code: string;
   mfo: string;
   name: string;

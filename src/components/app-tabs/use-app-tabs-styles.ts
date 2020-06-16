@@ -27,5 +27,10 @@ export const useAppTabsStyles = makeStyles((theme: Theme) =>
         fontWeight: theme.typography.fontWeightMedium,
       },
     },
+    '@media print': {
+      tabRoot: {
+        display: 'none',
+      },
+    },
   }),
 );

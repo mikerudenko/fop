@@ -31,7 +31,6 @@ export const FormFieldDate = ({ label, name }: FormFieldDateProps) => {
   });
 
   const onChange = useAutoCallback((value) => {
-    debugger;
     setValue(name, value.toISOString());
   });
 

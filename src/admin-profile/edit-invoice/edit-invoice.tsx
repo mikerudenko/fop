@@ -1,19 +1,11 @@
-import React, { memo, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useInvoicesConnect } from '../../store/invoices/use-incoices-connect';
+import React, { memo } from 'react';
 import { InvoiceForm } from '../invoice-form';
 import { H4 } from '../../components/typography/h4';
 import { AppLoader } from '../../components/app-loader';
+import { useGetCurrentInvoice } from '../../store/invoices/useGetCurrentInvoice';
 
 export const EditInvoice = memo(() => {
-  const { id } = useParams();
-  const { currentInvoice, GetInvoiceListRequest } = useInvoicesConnect(id);
-
-  useEffect(() => {
-    if (!currentInvoice) {
-      GetInvoiceListRequest();
-    }
-  }, [GetInvoiceListRequest, currentInvoice]);
+  const currentInvoice = useGetCurrentInvoice();
 
   if (!currentInvoice) {
     return <AppLoader />;

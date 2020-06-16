@@ -6,6 +6,7 @@ export enum ROUTES {
   notFound = '/not-found',
   invoices = '/invoices',
   createInvoice = '/create-invoice',
+  printInvoice = '/print-invoice',
 }
 
 export const FLEX_CENTER_BETWEEN = {

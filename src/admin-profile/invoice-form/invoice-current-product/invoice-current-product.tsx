@@ -30,7 +30,7 @@ export const InvoiceCurrentProduct = memo(
         return;
       }
 
-      const product = productList![currentProduct.value as string];
+      const product = productList![currentProduct];
       const sum = Number(
         format(multiply(Number(quantity), product!.price), { precision: 14 }),
       );

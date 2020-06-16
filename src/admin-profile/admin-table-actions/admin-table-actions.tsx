@@ -1,9 +1,8 @@
-import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
 import React, { ReactNode } from 'react';
 import { AppRemoveButton } from '../../components/app-button';
 import { useAdminTableActionsStyles } from './use-admin-table-actions-styles';
 import { useAutoCallback } from 'hooks.macro';
+import { AppEditButton } from '../../components/app-button/app-edit-button';
 
 type AdminTableActionsProps = {
   onEditClick(id: string): void;
@@ -26,9 +25,7 @@ export const AdminTableActions = ({
   return (
     <div className={classes.actions}>
       {additionalAction}
-      <IconButton aria-label='edit' onClick={onEditHandle}>
-        <EditIcon fontSize='inherit' />
-      </IconButton>
+      <AppEditButton onClick={onEditHandle} />
       <AppRemoveButton onClick={onDeleteHandle} />
     </div>
   );

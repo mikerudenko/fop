@@ -10,6 +10,7 @@ import { AdminCustomers } from './admin-customers';
 import { AdminInvoices } from './admin-invoices';
 import { CreateInvoice } from './create-invoice/create-invoice';
 import { EditInvoice } from './edit-invoice';
+import { PrintInvoice } from './print-invoice';
 
 const urlList = {
   products: ROUTES.admin + ROUTES.products,
@@ -17,6 +18,7 @@ const urlList = {
   invoices: ROUTES.admin + ROUTES.invoices,
   createInvoice: ROUTES.admin + ROUTES.createInvoice,
   editInvoice: ROUTES.admin + ROUTES.invoices + '/:id',
+  printInvoice: ROUTES.admin + ROUTES.printInvoice + '/:id',
 };
 
 const tabs = [
@@ -45,6 +47,7 @@ export const AdminProfile = memo(() => {
           <Route path={urlList.invoices} exact component={AdminInvoices} />
           <Route path={urlList.createInvoice} exact component={CreateInvoice} />
           <Route path={urlList.editInvoice} exact component={EditInvoice} />
+          <Route path={urlList.printInvoice} exact component={PrintInvoice} />
           <Redirect to={urlList.products} />
         </Switch>
       </AppTabs>

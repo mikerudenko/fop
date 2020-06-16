@@ -1,16 +1,17 @@
+import noop from 'lodash/noop';
 import React, { memo, useCallback, useMemo } from 'react';
+import { InvoiceProduct } from '../../api';
 import { AppRemoveButton } from '../app-button/app-remove-button';
 import { useProductTableStyles } from './use-product-table-styles';
-import { InvoiceProduct } from '../../api';
 
 type ProductsTableProps = {
   products: InvoiceProduct[];
-  showActions: boolean;
-  removeProduct(index: number): void;
+  showActions?: boolean;
+  removeProduct?(index: number): void;
 };
 
 export const ProductsTable = memo(
-  ({ products, showActions, removeProduct }: ProductsTableProps) => {
+  ({ products, showActions, removeProduct = noop }: ProductsTableProps) => {
     const classes = useProductTableStyles();
 
     const renderProductRow = useCallback(

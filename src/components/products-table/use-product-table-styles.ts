@@ -6,12 +6,14 @@ export const useProductTableStyles = makeStyles({
     borderCollapse: 'collapse',
   },
   th: {
+    height: 25,
     fontWeight: 'bold',
     textAlign: 'center',
     border: '1px solid black',
     borderCollapse: 'collapse',
   },
   td: {
+    height: 25,
     textAlign: 'center',
     border: '1px solid black',
     borderCollapse: 'collapse',
@@ -21,5 +23,6 @@ export const useProductTableStyles = makeStyles({
     border: '1px solid black',
     borderCollapse: 'collapse',
     textAlign: 'right',
+    paddingRight: 10,
   },
 });

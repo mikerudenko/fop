@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { push } from 'connected-react-router';
+import { useAutoCallback, useAutoEffect, useAutoMemo } from 'hooks.macro';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { META_THUNK, ROUTES } from '../../app.constants';
+import { AppPrintButton } from '../../components/app-button/app-print-button';
+import { APP_CONFIRM } from '../../components/app-confirm';
 import { useInvoicesConnect } from '../../store/invoices';
 import { useModalConnect } from '../../store/modal';
-import { APP_CONFIRM } from '../../components/app-confirm';
-import { META_THUNK, ROUTES } from '../../app.constants';
-import { useDispatch } from 'react-redux';
-import { push } from 'connected-react-router';
 import { AdminTableActions } from '../admin-table-actions';
 
 export const useAdminInvoicesLogic = () => {
@@ -18,69 +20,63 @@ export const useAdminInvoicesLogic = () => {
   const [idToDelete, setIdToDelete] = useState<null | string>(null);
   const dispatch = useDispatch();
 
-  const invoices = useMemo(
-    () =>
-      invoiceList
-        ? Object.keys(invoiceList).map((key) => invoiceList[key])
-        : [],
-    [invoiceList],
+  const invoices = useAutoMemo(() =>
+    invoiceList ? Object.keys(invoiceList).map((key) => invoiceList[key]) : [],
   );
 
-  const ResetDelete = useCallback(() => {
+  const ResetDelete = useAutoCallback(() => {
     setIdToDelete(null);
     HideModal(APP_CONFIRM);
-  }, [HideModal]);
+  });
 
-  const onConfirmDelete = useCallback(async () => {
+  const onConfirmDelete = useAutoCallback(async () => {
     await DeleteInvoiceRequest(idToDelete, META_THUNK);
     ResetDelete();
-  }, [DeleteInvoiceRequest, idToDelete, ResetDelete]);
+  });
 
-  const onEditClick = useCallback(
-    (id: string) => {
-      dispatch(push(ROUTES.admin + ROUTES.invoices + `/${id}`));
+  const onEditClick = useAutoCallback((id: string) => {
+    dispatch(push(ROUTES.admin + ROUTES.invoices + `/${id}`));
+  });
+
+  const onDeleteClick = useAutoCallback((id: string) => {
+    setIdToDelete(id);
+    ShowModal(APP_CONFIRM);
+  });
+
+  const onPrintCLick = useAutoCallback((id: string) => {
+    dispatch(push(ROUTES.admin + ROUTES.printInvoice + `/${id}`));
+  });
+
+  const columns = useAutoMemo(() => [
+    {
+      dataField: 'id',
+      label: 'Номер рахунку',
+      formatter: (value: string) => value,
     },
-    [dispatch],
-  );
-
-  const onDeleteClick = useCallback(
-    (id: string) => {
-      setIdToDelete(id);
-      ShowModal(APP_CONFIRM);
+    {
+      dataField: 'actions',
+      label: '',
+      formatter: (value: string, values: any) => (
+        <AdminTableActions
+          additionalAction={
+            <AppPrintButton id={values.id} onClick={onPrintCLick} />
+          }
+          id={values.id as string}
+          {...{ onDeleteClick, onEditClick }}
+        />
+      ),
     },
-    [ShowModal],
-  );
+  ]);
 
-  const columns = useMemo(
-    () => [
-      {
-        dataField: 'id',
-        label: 'Номер рахунку',
-        formatter: (value: string) => value,
-      },
-      {
-        dataField: 'actions',
-        label: '',
-        formatter: (value: string, values: any) => (
-          <AdminTableActions
-            id={values.id as string}
-            {...{ onDeleteClick, onEditClick }}
-          />
-        ),
-      },
-    ],
-    [onDeleteClick, onEditClick],
-  );
-
-  const onAddClick = useCallback(() => {
+  const onAddClick = useAutoCallback(() => {
     dispatch(push(ROUTES.admin + ROUTES.createInvoice));
-  }, [dispatch]);
+  });
 
-  useEffect(() => {
+  useAutoEffect(() => {
     if (!invoiceList) {
       GetInvoiceListRequest();
     }
-  }, [GetInvoiceListRequest, invoiceList]);
+  });
 
   return {
     invoices,

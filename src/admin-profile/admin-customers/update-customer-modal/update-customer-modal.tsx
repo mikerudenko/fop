@@ -29,7 +29,7 @@ export const UpdateCustomerModal = memo(
           <Grid container spacing={2}>
             <Grid item md={6}>
               <FormField name='id' type='text' disabled label='ID' />
-              <FormField name='code' type='text' required label='Код ЄДРОПУ' />
+              <FormField name='code' type='text' required label='Код ЄДРПОУ' />
               <FormField
                 name='name'
                 type='text'

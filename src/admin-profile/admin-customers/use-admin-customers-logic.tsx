@@ -62,7 +62,7 @@ export const useAdminCustomersLogic = () => {
     () => [
       {
         dataField: 'code',
-        label: 'Код ЄДРОПУ',
+        label: 'Код ЄДРПОУ',
         formatter: identity,
       },
       {
