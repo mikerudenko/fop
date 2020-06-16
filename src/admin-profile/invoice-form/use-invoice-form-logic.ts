@@ -55,7 +55,12 @@ export const useInvoiceFormLogic = (initialValues: Invoice) => {
   );
 
   const productSelectList = useAutoMemo(() =>
-    transformEntityToList(productList),
+    productList
+      ? Object.keys(productList).map((key) => ({
+          value: productList[key]!.id,
+          label: `${productList[key]!.code}-${productList[key]!.name}`,
+        }))
+      : [],
   );
 
   const appendProduct = useAutoCallback((product: InvoiceProduct) => {
