@@ -33,16 +33,7 @@ export const InvoiceForm = memo(({ initialValues }: InvoiceFormProps) => {
   const classes = useInvoiceFormStyles();
 
   const formConfig = {
-    defaultValues: {
-      date: new Date(initialValues.date),
-      addition: initialValues.addition,
-      status: invoiceStatusSelectList.find(
-        ({ value }) => value === initialValues.status,
-      ),
-      payerId: customerSelectList.find(
-        ({ value }) => value === initialValues.payerId,
-      ),
-    },
+    defaultValues: initialValues,
   };
 
   if (loading) {

@@ -1,4 +1,8 @@
-import { CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core';
+import {
+  CssBaseline,
+  unstable_createMuiStrictModeTheme as createMuiTheme,
+  ThemeProvider,
+} from '@material-ui/core';
 import React, { memo } from 'react';
 import { jssPreset, StylesProvider } from '@material-ui/styles';
 import { createBrowserHistory } from 'history';

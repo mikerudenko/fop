@@ -1,12 +1,12 @@
-import React from 'react';
+import FormControl from '@material-ui/core/FormControl';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import c from 'classnames';
-
-import { useFormFieldDateStyles } from './use-form-field-date-styles';
-import { useFormContext, Controller } from 'react-hook-form';
+import { useAutoCallback, useAutoEffect } from 'hooks.macro';
+import React from 'react';
+import { useFormContext } from 'react-hook-form';
 import { hasError } from '../../../services/form-service';
 import { FormFieldError } from '../form-field-error';
-import FormControl from '@material-ui/core/FormControl';
+import { useFormFieldDateStyles } from './use-form-field-date-styles';
 
 type FormFieldDateProps = {
   label: string;
@@ -16,28 +16,36 @@ type FormFieldDateProps = {
 export const FormFieldDate = ({ label, name }: FormFieldDateProps) => {
   const classes = useFormFieldDateStyles();
   const {
-    control,
+    register,
     errors,
+    getValues,
+    setValue,
     formState: { dirty },
   } = useFormContext();
   const { showError, error } = hasError({ errors, name, dirty });
+  const date = getValues()[name];
+  const selectedDate = date && new Date(date);
+
+  useAutoEffect(() => {
+    register({ name });
+  });
+
+  const onChange = useAutoCallback((value) => {
+    debugger;
+    setValue(name, value.toISOString());
+  });
 
   return (
     <FormControl error={showError} className={c(classes.formControl)}>
-      <Controller
-        control={control}
-        name={name}
-        as={
-          <KeyboardDatePicker
-            label={label}
-            autoOk
-            onChange={() => {}}
-            format='dd/MM/yyyy'
-            value={() => {}}
-            inputVariant='outlined'
-          />
-        }
+      <KeyboardDatePicker
+        label={label}
+        autoOk
+        onChange={onChange}
+        format='dd/MM/yyyy'
+        value={selectedDate}
+        inputVariant='outlined'
       />
+
       <FormFieldError {...{ name, showError, error }} />
     </FormControl>
   );

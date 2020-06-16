@@ -3,7 +3,6 @@ import { Product } from './api-products.types';
 import { Dictionary } from '@reduxjs/toolkit';
 
 export const updateProduct = ({ id, ...rest }: Product) => {
-  debugger;
   return firebaseFirestore
     .collection('products')
     .doc(id)

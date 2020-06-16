@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useProductsConnect } from '../../store/products';
 import { useModalConnect } from '../../store/modal';
-import { UPDATE_PRODUCT_MODAL } from './admin-products.constants';
+import {
+  UPDATE_PRODUCT_MODAL,
+  PRODUCT_TYPE_SELECT_LIST,
+} from './admin-products.constants';
 import { APP_CONFIRM } from '../../components/app-confirm';
 import { META_THUNK } from '../../app.constants';
 import { AdminTableActions } from '../admin-table-actions';
+import { ProductType } from '../../api';
+import { getSelectOptionById } from '../../services/helper-service';
 
 export const useAdminProductsLogic = () => {
   const {
@@ -73,6 +78,12 @@ export const useAdminProductsLogic = () => {
         dataField: 'price',
         label: 'Ціна',
         formatter: (value: string) => value,
+      },
+      {
+        dataField: 'productType',
+        label: 'Тип продукції',
+        formatter: (value: ProductType) =>
+          getSelectOptionById(PRODUCT_TYPE_SELECT_LIST, value)?.label,
       },
       {
         dataField: 'id',

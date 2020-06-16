@@ -9,7 +9,10 @@ import { useNotificationsConnect } from '../../store/notifications/use-notificat
 import { useProductsConnect } from '../../store/products';
 import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
-import { transformEntityToList } from '../../services/helper-service';
+import {
+  transformEntityToList,
+  getArrayIntersection,
+} from '../../services/helper-service';
 
 export const useInvoiceFormLogic = (initialValues: Invoice) => {
   const { customerList, GetCustomerListRequest } = useCustomersConnect();
@@ -22,14 +25,12 @@ export const useInvoiceFormLogic = (initialValues: Invoice) => {
     initialValues.products,
   );
   const onSubmit = useAutoCallback(async (payload: any) => {
-    const payerId = payload?.payerId?.value;
-    const addition = payload?.addition;
-    const status = payload?.status?.value;
-    const date = payload.date?.toISOString();
+    const { payerId, addition, status, date } = payload;
+
+    debugger;
 
     if (
-      [payerId, status, date].includes(null) ||
-      [payerId, status, date].includes(undefined)
+      getArrayIntersection([payerId, status, date], [null, undefined]).length
     ) {
       showErrorNotification('Не всі поля заповнені');
     } else {
