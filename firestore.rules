@@ -16,5 +16,9 @@ service cloud.firestore {
     match /auth/{allPaths=**} {
       allow create, update, delete, get, list : if request.auth != null
     }
+
+    match /documents/{allPaths=**} {
+      allow create, update, delete, get, list : if request.auth != null
+    }
   }
 }

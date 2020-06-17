@@ -6,3 +6,5 @@ export * from './api-customers';
 export * from './api-customers.types';
 export * from './api-invoices';
 export * from './api-invoices.types';
+export * from './api-documents';
+export * from './api-documents.types';

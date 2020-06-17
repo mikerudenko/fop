@@ -8,6 +8,7 @@ import { ModalSlice } from './modal';
 import { ProductsSlice } from './products';
 import { CustomersSlice } from './customers';
 import { InvoicesSlice } from './invoices';
+import { DocumentsSlice } from './documents';
 
 export const createRootReducer = (history: History) =>
   combineReducers({
@@ -18,4 +19,5 @@ export const createRootReducer = (history: History) =>
     [ProductsSlice.name]: ProductsSlice.reducer,
     [CustomersSlice.name]: CustomersSlice.reducer,
     [InvoicesSlice.name]: InvoicesSlice.reducer,
+    [DocumentsSlice.name]: DocumentsSlice.reducer,
   });

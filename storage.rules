@@ -3,7 +3,7 @@ rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
 
-    match /certificates/{userId}/{allPaths=**} {
+    match /documents/{userId}/{allPaths=**} {
       allow create, update, delete, get, list : if request.auth != null
     }
   }
