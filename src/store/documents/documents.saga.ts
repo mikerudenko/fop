@@ -39,8 +39,8 @@ export function* updateDocumentSaga(
   action: PayloadAction<AppDocument, string, MetaThunk>,
 ) {
   try {
-    yield call(updateDocument, action.payload);
-    yield put(UpdateDocumentSuccess(action.payload, action.meta));
+    const document: Document = yield call(updateDocument, action.payload);
+    yield put(UpdateDocumentSuccess(document, action.meta));
     yield put(showSuccessNotification('Документ успішно відредагований'));
   } catch {
     yield put(

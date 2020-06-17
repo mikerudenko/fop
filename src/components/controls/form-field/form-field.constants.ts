@@ -1,10 +1,11 @@
+import { FormChips } from '../form-chips';
+import { FormFieldAutocomplete } from '../form-field-autocomplete';
+import { FormFieldDate } from '../form-field-date';
+import { FormFieldFile } from '../form-field-file';
+import { FormFieldMask } from '../form-field-mask';
+import { FormFieldNumber } from '../form-field-number';
 import { FormFieldText } from '../form-field-text';
 import { FormSelect } from '../form-select';
-import { FormChips } from '../form-chips';
-import { FormFieldNumber } from '../form-field-number';
-import { FormFieldMask } from '../form-field-mask';
-import { FormFieldDate } from '../form-field-date';
-import { FormFieldAutocomplete } from '../form-field-autocomplete';
 
 export type FormFieldType = string;
 
@@ -18,4 +19,5 @@ export const FormFields = {
   mask: FormFieldMask,
   date: FormFieldDate,
   autocomplete: FormFieldAutocomplete,
+  file: FormFieldFile,
 };

@@ -1,41 +1,57 @@
 import React, { memo, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Button from '@material-ui/core/Button';
 import { useFormContext } from 'react-hook-form';
+import { useFormFieldFileStyles } from './use-form-field-file-styles';
+import { useAutoEffect, useAutoCallback } from 'hooks.macro';
 
 export type FormFieldFileProps = {
   name: string;
-  uploadLabel: string;
 };
 
-export const FormFieldFile = memo(
-  ({ name, uploadLabel }: FormFieldFileProps) => {
-    const { setValue, getValues } = useFormContext();
-    const [internalFile, setInternalFile] = useState<any>(getValues()[name]);
+export const FormFieldFile = memo(({ name }: FormFieldFileProps) => {
+  const { setValue, register } = useFormContext();
+  const classes = useFormFieldFileStyles();
+  const [file, setFile] = useState<null | File>(null);
 
-    const { getRootProps, getInputProps } = useDropzone({
-      accept: '*',
-      onDrop: ([file]) => {
-        setInternalFile(file);
-        setValue(name, file);
+  useAutoEffect(() => {
+    register({ name });
+  });
+
+  const onChange = useAutoCallback(
+    ({
+      target: {
+        files: [file],
       },
-    });
+    }) => {
+      ;
+      setValue(name, file);
+      setFile(file);
+    },
+  );
 
-    return (
-      <section className='container'>
-        <div {...getRootProps({ className: 'dropzone' })}>
-          <input {...getInputProps()} />
-          <Button
-            variant='contained'
-            color='default'
-            startIcon={<CloudUploadIcon />}
-          >
-            {uploadLabel}
-          </Button>
-          {internalFile && internalFile?.name}
-        </div>
-      </section>
-    );
-  },
-);
+  return (
+    <>
+      <input
+        accept='*'
+        className={classes.input}
+        style={{ display: 'none' }}
+        id='raised-button-file'
+        multiple
+        onChange={onChange}
+        type='file'
+      />
+      <label htmlFor='raised-button-file' className={classes.label}>
+        <Button
+          variant='contained'
+          component='span'
+          className={classes.button}
+          endIcon={<CloudUploadIcon />}
+        >
+          Завантажити
+        </Button>
+        {file?.name}
+      </label>
+    </>
+  );
+});

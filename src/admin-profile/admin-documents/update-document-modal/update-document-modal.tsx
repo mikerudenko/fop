@@ -23,6 +23,8 @@ export const UpdateDocumentModal = memo(
     const formConfig = useAutoMemo(() => ({
       defaultValues: {
         name: initialValues.name,
+        id: initialValues.id,
+        file: '',
       },
     }));
 
@@ -30,8 +32,7 @@ export const UpdateDocumentModal = memo(
       <AppForm {...{ onSubmit, formConfig }}>
         <FormField name='id' type='text' disabled label='ID' />
         <FormField name='name' type='text' required label='Найменування' />
-        {/* todo will be file */}
-        <FormField name='file' type='number' required label='Ціна' />
+        <FormField name='file' type='file' required label='Файл' />
         <AppSubmitButton color='primary' text='Зберегти' />
       </AppForm>
     ));
