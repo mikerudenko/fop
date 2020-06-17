@@ -6,9 +6,6 @@ import {
 import { AppDocument } from './api-documents.types';
 
 export const updateDocument = async ({ id, file, name }: AppDocument) => {
-  // todo update file
-  // todo get file download link
-  // todo save record
   const dbRecord: any = { name };
 
   if (file instanceof File) {
@@ -20,7 +17,7 @@ export const updateDocument = async ({ id, file, name }: AppDocument) => {
     .doc(id)
     .set(dbRecord, { merge: true });
 
-  return dbRecord;
+  return { id, ...dbRecord };
 };
 
 export const getDocumentList = async () => {
