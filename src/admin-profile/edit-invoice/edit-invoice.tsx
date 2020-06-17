@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { InvoiceForm } from '../invoice-form';
 import { H4 } from '../../components/typography/h4';
 import { AppLoader } from '../../components/app-loader';
-import { useGetCurrentInvoice } from '../../store/invoices/useGetCurrentInvoice';
+import { useGetCurrentInvoice } from '../../store/invoices/use-get-current-invoice';
 
 export const EditInvoice = memo(() => {
   const currentInvoice = useGetCurrentInvoice();

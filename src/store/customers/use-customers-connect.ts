@@ -1,32 +1,26 @@
+import { useAutoMemo } from 'hooks.macro';
 import { useSelector } from 'react-redux';
-import { useMemo } from 'react';
-
-import { CustomersSlice } from './customers.slice';
+import { useActions } from '../../hooks';
 import {
+  constructCustomerByIdSelector,
   selectCustomerList,
   selectCustomerListNetworkStatus,
-  constructCustomerByIdSelector,
 } from './customers.selectors';
-import { useActions } from '../../hooks';
+import { CustomersSlice } from './customers.slice';
 
 export const useCustomersConnect = (id?: string | null) => {
   const networkStatus = useSelector(selectCustomerListNetworkStatus);
   const customerList = useSelector(selectCustomerList);
-  const currentCustomerSelector = useMemo(
-    () => constructCustomerByIdSelector(id),
-    [id],
+  const currentCustomerSelector = useAutoMemo(() =>
+    constructCustomerByIdSelector(id),
   );
   const currentCustomer = useSelector(currentCustomerSelector);
-
   const actions = useActions(CustomersSlice.actions);
 
-  return useMemo(
-    () => ({
-      ...actions,
-      customerList,
-      networkStatus,
-      currentCustomer,
-    }),
-    [actions, networkStatus, customerList, currentCustomer],
-  );
+  return useAutoMemo(() => ({
+    ...actions,
+    customerList,
+    networkStatus,
+    currentCustomer,
+  }));
 };

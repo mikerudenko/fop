@@ -1,14 +1,14 @@
+import { useAutoMemo } from 'hooks.macro';
 import { useSelector } from 'react-redux';
-
-import { NotificationsSlice } from './notifications.slice';
+import { useActions } from '../../hooks';
 import { selectNotifications } from './notifications.selectors';
+import { NotificationsSlice } from './notifications.slice';
 import {
   showErrorNotification,
-  showWarningNotification,
-  showSuccessNotification,
   showInfoNotification,
+  showSuccessNotification,
+  showWarningNotification,
 } from './notifications.utils';
-import { useActions } from '../../hooks';
 
 const {
   EnqueueSnackbar,
@@ -18,17 +18,18 @@ const {
 
 export const useNotificationsConnect = () => {
   const notifications = useSelector(selectNotifications);
+  const actions = useActions({
+    closeSnackbar: CloseSnackbar,
+    removeSnackbar: RemoveSnackbar,
+    enqueueSnackbar: EnqueueSnackbar,
+    showErrorNotification,
+    showWarningNotification,
+    showSuccessNotification,
+    showInfoNotification,
+  });
 
-  return {
-    ...useActions({
-      closeSnackbar: CloseSnackbar,
-      removeSnackbar: RemoveSnackbar,
-      enqueueSnackbar: EnqueueSnackbar,
-      showErrorNotification,
-      showWarningNotification,
-      showSuccessNotification,
-      showInfoNotification,
-    }),
+  return useAutoMemo(() => ({
+    ...actions,
     notifications,
-  };
+  }));
 };

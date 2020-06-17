@@ -1,7 +1,7 @@
-import { useRef, useCallback, useEffect, SyntheticEvent } from 'react';
-import { useSnackbar } from 'notistack';
+import { useAutoCallback, useAutoEffect } from 'hooks.macro';
 import noop from 'lodash/noop';
-
+import { useSnackbar } from 'notistack';
+import { SyntheticEvent, useRef } from 'react';
 import { useNotificationsConnect } from './use-notifications-connect';
 
 export const useNotificationsLogic = () => {
@@ -9,23 +9,20 @@ export const useNotificationsLogic = () => {
   const { notifications, removeSnackbar } = useNotificationsConnect();
   const displayedRef = useRef<string[]>([]);
 
-  const storeDisplayed = useCallback((id) => {
+  const storeDisplayed = useAutoCallback((id) => {
     displayedRef.current = [...displayedRef.current, id];
-  }, []);
+  });
 
-  const removeDisplayed = useCallback((id) => {
+  const removeDisplayed = useAutoCallback((id) => {
     displayedRef.current = displayedRef.current.filter((key) => id !== key);
-  }, []);
+  });
 
-  const onExited = useCallback(
-    (event: SyntheticEvent, key: string) => {
-      removeSnackbar(key);
-      removeDisplayed(key);
-    },
-    [removeDisplayed, removeSnackbar],
-  );
+  const onExited = useAutoCallback((event: SyntheticEvent, key: string) => {
+    removeSnackbar(key);
+    removeDisplayed(key);
+  });
 
-  useEffect(() => {
+  useAutoEffect(() => {
     notifications.forEach(
       ({ key, message, options = {}, dismissed = false }: any) => {
         if (dismissed) {
@@ -49,5 +46,5 @@ export const useNotificationsLogic = () => {
         storeDisplayed(key);
       },
     );
-  }, [notifications, closeSnackbar, enqueueSnackbar, onExited, storeDisplayed]);
+  });
 };

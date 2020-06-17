@@ -1,13 +1,13 @@
-import { useSelector } from 'react-redux';
+import { useAutoMemo } from 'hooks.macro';
 import { useMemo } from 'react';
-
-import { InvoicesSlice } from './invoices.slice';
+import { useSelector } from 'react-redux';
+import { useActions } from '../../hooks';
 import {
+  constructInvoiceByIdSelector,
   selectInvoiceList,
   selectInvoiceListNetworkStatus,
-  constructInvoiceByIdSelector,
 } from './invoices.selectors';
-import { useActions } from '../../hooks';
+import { InvoicesSlice } from './invoices.slice';
 
 export const useInvoicesConnect = (id?: string | null) => {
   const networkStatus = useSelector(selectInvoiceListNetworkStatus);
@@ -17,16 +17,12 @@ export const useInvoicesConnect = (id?: string | null) => {
     [id],
   );
   const currentInvoice = useSelector(currentInvoiceSelector);
-
   const actions = useActions(InvoicesSlice.actions);
 
-  return useMemo(
-    () => ({
-      ...actions,
-      invoiceList,
-      networkStatus,
-      currentInvoice,
-    }),
-    [actions, networkStatus, invoiceList, currentInvoice],
-  );
+  return useAutoMemo(() => ({
+    ...actions,
+    invoiceList,
+    networkStatus,
+    currentInvoice,
+  }));
 };

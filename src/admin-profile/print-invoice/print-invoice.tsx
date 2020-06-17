@@ -12,7 +12,7 @@ import { ProductsTable } from '../../components/products-table';
 import { H5 } from '../../components/typography/h5';
 import { useAuthConnect } from '../../store/auth/use-auth-connect';
 import { useCustomersConnect } from '../../store/customers/use-customers-connect';
-import { useGetCurrentInvoice } from '../../store/invoices/useGetCurrentInvoice';
+import { useGetCurrentInvoice } from '../../store/invoices/use-get-current-invoice';
 import { usePrintInvoiceStyles } from './use-print-invoice-styles';
 import Button from '@material-ui/core/Button';
 import PrintIcon from '@material-ui/icons/Print';
