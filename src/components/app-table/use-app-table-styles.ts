@@ -6,7 +6,6 @@ export const useAppTableStyles = makeStyles({
     overflowX: 'auto',
   },
   tableWrapper: {
-    maxHeight: 407,
     overflow: 'auto',
     position: 'relative',
   },
