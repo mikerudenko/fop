@@ -1,6 +1,6 @@
 
 
-# Application to check taxes for person and notify about tax pay period 💸
+# 💸Application to check taxes for person and notify about tax pay period 💸
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
